@@ -285,15 +285,25 @@ def analyze(report, cfg, transport=post_json):
         report["analysis_status"] = "missing_llm_config"
         return
     try:
-        result = transport(endpoint, {"Authorization": "Bearer " + token},
-                           {"model": model, "messages": [{"role": "system", "content": PROMPT},
+        payload = {"model": model, "messages": [{"role": "system", "content": PROMPT},
                              {"role": "user", "content": json.dumps({"items": selected}, ensure_ascii=False)}],
-                            "response_format": {"type": "json_object"}, "max_tokens": 10000})
+                   "response_format": {"type": "json_object"}, "max_tokens": 10000}
+        if urlsplit(endpoint).hostname == "api.deepseek.com":
+            # Bounded content analysis uses the documented non-thinking mode.
+            payload["thinking"] = {"type": "disabled"}
+        result = transport(endpoint, {"Authorization": "Bearer " + token}, payload)
+        usage = result.get("usage") or {}
+        report["analysis_usage"] = {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens")
+                                    if isinstance(usage, dict) and type(usage.get(k)) is int and usage[k] >= 0}
+        if result["choices"][0].get("finish_reason") == "length":
+            raise RadarError("llm_output_truncated")
         report["analysis"] = validate_analysis(json.loads(result["choices"][0]["message"]["content"]), selected)
         report["analysis_status"] = "ok"
         report["analysis_model"] = model
-    except (RadarError, KeyError, IndexError, ValueError, TypeError):
+    except (RadarError, KeyError, IndexError, ValueError, TypeError) as exc:
         report["analysis_status"] = "failed_validation_or_request"
+        code = str(exc) if isinstance(exc, RadarError) else "llm_response_format_error"
+        report["analysis_error"] = code if re.fullmatch(r"[a-z_]+(?:_[0-9]{3})?", code) else "llm_request_error"
         # Keep the collected facts; don't substitute a fabricated model report.
 
 
