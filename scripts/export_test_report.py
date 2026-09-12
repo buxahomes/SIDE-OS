@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded annual keyword search with auditable strict thresholds; encrypted export only."""
+"""Bounded undated keyword search with auditable strict thresholds; encrypted export only."""
 import json
 import os
 from pathlib import Path
@@ -16,29 +16,24 @@ def main():
         print('missing_configuration')
         return 1
     now = datetime.now(TZ)
-    start, end = now.date().replace(month=1, day=1), now.date()
+    start, end = datetime.min.date(), datetime.max.date()
     cfg = json.loads((ROOT / 'config/radar.json').read_text(encoding='utf-8'))
-    cfg.update(keywords=['北京男地陪', '北京男大'], page_size=50, pages_per_keyword=15, max_requests=11,
-               target_per_platform=10, start_date=str(start), end_date=str(end),
-               continuation_pages={'douyin:北京男地陪': [6, 15], 'xiaohongshu:北京男大': [2, 2]})
+    cfg.update(keywords=['地陪', '男大'], page_size=50, pages_per_keyword=5, max_requests=20,
+               target_per_platform=10, start_date='', end_date='')
     cfg.pop('lookback_days', None)
     cfg['related_terms'] = list(dict.fromkeys(cfg['related_terms'] + ['男大', '北京']))
-    report = {'generated_at': now.isoformat(), 'period': [str(start), str(end)], 'config': cfg,
-              'coverage': '红狐接口收录样本；请求本年日期范围。小红书公开说明仅近30天热门库，不能据此声称覆盖全年。',
+    report = {'generated_at': now.isoformat(), 'period': [None, None], 'config': cfg,
+              'coverage': '不向红狐传入日期限制；实际可检索历史仍取决于接口收录与默认行为，不代表全历史全量。',
               'queries': [], 'query_audit': [], 'items': [], 'errors': [], 'request_count': 0,
               'analysis': [], 'analysis_status': 'not_requested_for_search_test',
-              'thresholds': {'douyin': {'metric': 'likes', 'operator': '>', 'value': 10000},
-                             'xiaohongshu': {'metric': 'likes+comments+saves+shares', 'operator': '>=', 'value': 1000}},
-              'continuation_of_run': '34697587823',
+              'thresholds': {'douyin': {'metric': 'likes', 'operator': '>', 'value': 5000},
+                             'xiaohongshu': {'metric': 'likes+comments+saves+shares', 'operator': '>=', 'value': 500}},
               'selection_note': 'items为数值门槛通过的候选，最终由报告审阅排除综艺、系统广告、非北京或无法确认北京关联的内容，再每平台取最多10条。',
               'run_url': 'https://github.com/buxahomes/SIDE-OS/actions/runs/' + os.environ.get('GITHUB_RUN_ID', '')}
     unique = {}
     for platform, (url, header, list_key, source) in ENDPOINTS.items():
         for keyword in cfg['keywords']:
-            continuation = {('douyin', '北京男地陪'): (6, 15), ('xiaohongshu', '北京男大'): (2, 2)}
-            if (platform, keyword) not in continuation:
-                continue
-            first_page, last_page = continuation[(platform, keyword)]
+            first_page, last_page = 1, cfg['pages_per_keyword']
             seen_pages = set()
             for page in range(first_page, last_page + 1):
                 q = {'platform': platform, 'keyword': keyword, 'page': page, 'requested_page_size': 50}
@@ -46,7 +41,7 @@ def main():
                 try:
                     result = post_json(url, {header: os.environ['REDFOX_API_KEY']},
                                        {'keyword': keyword, 'source': source, 'pageNum': page, 'pageSize': 50,
-                                        'startDate': str(start), 'endDate': str(end)})
+                                        'startDate': '', 'endDate': ''})
                     if result.get('code') != 2000:
                         raise RadarError('provider_rejected_request')
                     data = result.get('data')
@@ -75,17 +70,15 @@ def main():
                         item = normalize(raw, platform, keyword, cfg, now, start, end)
                         reasons = []
                         date = parse_date(published)
-                        if date is None: reasons.append('missing_publish_date')
-                        elif not start <= date.date() <= end: reasons.append('outside_requested_year')
                         if platform == 'douyin':
                             m = counts['likes']
                             if m is None: reasons.append('missing_like_count')
                             elif m['approximate']: reasons.append('approximate_like_count_requires_review')
-                            elif m['value'] <= 10000: reasons.append('likes_not_above_10000')
+                            elif m['value'] <= 5000: reasons.append('likes_not_above_5000')
                         else:
                             if total is None: reasons.append('missing_interaction_count')
                             elif any(v['approximate'] for v in counts.values()): reasons.append('approximate_interaction_count_requires_review')
-                            elif total < 1000: reasons.append('interactions_below_1000')
+                            elif total < 500: reasons.append('interactions_below_500')
                         if item is None: reasons.append('failed_url_topic_or_date_normalization')
                         audit.update(title=clean_text(title, 200), excerpt=clean_text(excerpt), author=clean_text(author, 80),
                                      published_raw=clean_text(published, 100), counts=counts, interaction_total=total,
