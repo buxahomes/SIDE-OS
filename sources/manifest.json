@@ -53,5 +53,18 @@
     "repository_path": "sources/originals/SIDE一程_城市同行服务报价图_测试版.png",
     "bytes": 141016,
     "sha256": "a88f5b9c3f00176bfb088d11e74bd41b2b9e4e0851618594a3b88a99db322399"
+  },
+  {
+    "name": "SideLand_一程_VI视觉识别规范_V1.1_原标锁定版.pdf",
+    "repository_path": "sources/originals/SideLand_一程_VI视觉识别规范_V1.1_原标锁定版.pdf",
+    "bytes": 1148025,
+    "sha256": "453517333e94594245bd0fcb84e1bc41c9c8e38b3487949da0d47f5055696b60",
+    "extracted_text": "sources/text/SideLand_一程_VI视觉识别规范_V1.1_原标锁定版.txt",
+    "role": "user_designated_logo_vi_reference",
+    "imported_on": "2026-09-12",
+    "pages": 24,
+    "filename_version": "V1.1",
+    "printed_version": "V1.0",
+    "notes": "Original file unchanged; application mockups are examples, not verified personal records."
   }
 ]

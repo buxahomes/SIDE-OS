@@ -9,6 +9,7 @@
 | 要做的事 | 入口 |
 | --- | --- |
 | 了解品牌与服务内容 | [项目定位](docs/01-brand.md) |
+| 查看Logo与VI规范 | [Side Land 一程 · V1.1原标锁定版](docs/10-logo-vi.md) |
 | 给客户报价 | [现行测试阶段 V1](docs/02-pricing.md) · [价格数据](config/pricing.json) |
 | 执行订单 | [运营流程](docs/03-operations.md) · [话术和表单](templates/operations.md) |
 | 查看人物资料 | [Side档案](docs/04-people.md) |
