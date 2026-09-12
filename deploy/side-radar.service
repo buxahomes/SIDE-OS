@@ -1,0 +1,21 @@
+[Unit]
+Description=Side daily content research
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=side-radar
+Group=side-radar
+WorkingDirectory=/opt/side-radar
+EnvironmentFile=/etc/side-radar.env
+ExecStart=/usr/bin/python3 /opt/side-radar/scripts/side_radar.py --live --output /var/lib/side-radar
+StateDirectory=side-radar
+StateDirectoryMode=0700
+UMask=0077
+TimeoutStartSec=30min
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/side-radar
