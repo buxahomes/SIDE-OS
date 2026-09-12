@@ -36,7 +36,7 @@ python3 -m unittest discover -s tests -v
 
 `fetch` 尝试读取公开网页中的正文或元数据，不能保证平台允许访问。截图、音视频导入会登记文件和校验值，**不等于已完成OCR、语音转写或视频理解**；正文、人工识别结果和字幕可单独入库。官方抖音账号API尚未接通。
 
-新增的 `scripts/side_radar.py` 提供红狐数据采集、规则初筛、模型分析和HTML日报；运行不带参数时只做离线预检。每天北京时间00:30的服务器定时模板见 `deploy/`。**红狐密钥已通过 GitHub Actions 真实查询测试；模型API未配置，每日定时运行未启用**。研究输出默认保存在被git忽略的 `research/local/radar/`，不自动公开发布或推送。详见[部署说明](docs/11-content-radar.md)。
+新增的 `scripts/side_radar.py` 提供红狐数据采集、规则初筛、模型分析和HTML日报；运行不带参数时只做离线预检。每天北京时间00:30的服务器定时模板见 `deploy/`。**红狐密钥已通过 GitHub Actions 真实查询测试；模型配置已注入，分析联调尚未通过，每日定时运行未启用**。研究输出默认保存在被git忽略的 `research/local/radar/`，不自动公开发布或推送。详见[部署说明](docs/11-content-radar.md)。
 
 ## 使用顺序
 
