@@ -1,8 +1,8 @@
 # SIDE 一程｜项目知识库
 
-独立项目：SIDE-OS。整理日期：2026-09-12。仓库：[buxahomes/SIDE-OS](https://github.com/buxahomes/SIDE-OS)。用户已明确选择保持 **Public** 并上传已整理资料；本提交为知识库初始导入，不写入 BUXA-OS。
+独立项目：SIDE-OS。整理日期：2026-09-12。仓库：[buxahomes/SIDE-OS](https://github.com/buxahomes/SIDE-OS)。用户已明确选择保持 **Public** 并上传已整理资料；本提交为知识库部分资料导入，不写入 BUXA-OS。
 
-这里保存城市同行服务的规则、流程、人物档案、照片系统和研究资料；保留原件与出处，使后续回答、报价和素材制作能追溯依据。
+这里保存城市同行服务的规则、流程、通用照片规范和研究工具，保留核心原件与出处。人物档案及身份参考资料暂缓公开，状态见迁移记录。
 
 ## 从这里开始
 
@@ -12,8 +12,8 @@
 | 给客户报价 | [现行测试阶段 V1](docs/02-pricing.md) · [价格数据](config/pricing.json) |
 | 执行订单 | [运营流程](docs/03-operations.md) · [话术和表单](templates/operations.md) |
 | 查看人物资料 | [Side档案](docs/04-people.md) |
-| 生成和修改照片 | [照片系统](docs/05-photos.md) · [去AI感规范原件](sources/originals/SIDE_照片生成去AI感规范_V1.md) |
-| 找素材和历史文件 | [素材索引](assets/README.md) · [全部目录](assets/catalog.csv) |
+| 生成和修改照片 | [照片系统](docs/05-photos.md) · [去AI感规范公开版](docs/photo-naturalism-public.md) |
+| 找素材和历史文件 | [本次公开资料索引](assets/README.md) |
 | 读取小红书、抖音 | [读取说明](docs/06-social-reading.md) |
 | 查看仍未确定的规则 | [待定事项](docs/07-open-decisions.md) |
 | 核对哪些内容已迁入 | [迁移范围](docs/08-migration.md) · [来源清单](sources/manifest.json) |
@@ -38,4 +38,6 @@ python3 -m unittest discover -s tests -v
 
 当前用户明确指令 → 本次整理的现行规则 → 原始文件 → 历史草稿 → 外部研究。日期新的文件也可能包含过时规则，不能仅凭文件名决定生效版本。研究材料不自动成为SIDE承诺。
 
-知识文字和核心原件已打包；大型照片包和其余参考图目前保留来源索引，尚未将全部二进制素材迁入GitHub。目录中不明归属素材与无关资料有单独状态。具体数量以迁移报告为准。
+本次已上传范围见[迁移记录](docs/08-migration.md)。人物档案、人物参考及完整素材目录因公开授权需进一步明确而暂缓；大型照片包尚未迁入。
+
+补充上传状态：内部对话决策日志被自动审批拦截，公开上传需更具体授权。历史SOP原件和全文一并暂缓，现仅纳入不含真实客户数据的通用运营流程与空白表单。

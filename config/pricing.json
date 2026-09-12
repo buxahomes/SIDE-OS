@@ -1,0 +1,23 @@
+{
+  "version": "测试阶段V1",
+  "status": "confirmed_current",
+  "currency": "CNY",
+  "hourly_rate": 228,
+  "minimum_hours": 4,
+  "minimum_amount": 912,
+  "day_package_hours": 8,
+  "day_package_paid_hours": 7,
+  "day_package_amount": 1596,
+  "overtime_hourly_rate": 228,
+  "drinking_supplement_hourly_rate": 120,
+  "day_package_includes_drinking_supplement": false,
+  "overtime_requires_prior_confirmation": true,
+  "deposit_percent": null,
+  "rounding_minutes": null,
+  "drinking_rounding_minutes": null,
+  "early_morning_definition": null,
+  "automatic_day_upgrade": null,
+  "cancellation_policy": null,
+  "source": "sources/originals/SIDE一程_城市同行服务报价单_测试阶段V1.png",
+  "reviewed_on": "2026-09-12"
+}

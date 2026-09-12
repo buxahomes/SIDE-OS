@@ -1,0 +1,57 @@
+[
+  {
+    "name": "SIDE_一程双径极简字标.png",
+    "repository_path": "sources/originals/SIDE_一程双径极简字标.png",
+    "bytes": 839109,
+    "sha256": "262984ea3d6e93a1b52c4c8c85ab2b73726b25358283f3f6c90240acd63a70e1"
+  },
+  {
+    "name": "SIDE_一程极简交叠路径标志.png",
+    "repository_path": "sources/originals/SIDE_一程极简交叠路径标志.png",
+    "bytes": 784069,
+    "sha256": "bfaaaa7dbb49ed14241ddf85b6e24d3500ec72e2cf49ecef2b6737b3cd1f15b7"
+  },
+  {
+    "name": "SIDE_一程极简品牌标志.png",
+    "repository_path": "sources/originals/SIDE_一程极简品牌标志.png",
+    "bytes": 147101,
+    "sha256": "0122c4944cf22c1309652b606c1f04160c181758188ee32bd4e47e0e4f4eaff5"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价单_测试版.pdf",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价单_测试版.pdf",
+    "bytes": 77948,
+    "sha256": "332b825edd723eee667f6bbdf2ce367aaf3dc4627075b2668459cb28f7f45dc8",
+    "extracted_text": "sources/text/SIDE一程_城市同行服务报价单_测试版.txt"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价单_测试阶段V1.png",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价单_测试阶段V1.png",
+    "bytes": 218526,
+    "sha256": "fa83efae676e815ce5c823f6e871c832726726b5ef68890b56048402b0dcd188"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价图_包天优惠版(1).png",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价图_包天优惠版(1).png",
+    "bytes": 190361,
+    "sha256": "b9dea23443e2744b1061541e35e971f7c509ee0e2315434f1ffad7edd4ffb68f"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价图_测试版(1).png",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价图_测试版(1).png",
+    "bytes": 142420,
+    "sha256": "83a39513a494295191aa78c5f6a909ef7494967cd46e9494bec5bc072547af96"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价图_测试版(2).png",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价图_测试版(2).png",
+    "bytes": 137722,
+    "sha256": "ea174a3f1244fb1b70ff3317cb46baa3873edfea95504b8e38ebf4e7931246df"
+  },
+  {
+    "name": "SIDE一程_城市同行服务报价图_测试版.png",
+    "repository_path": "sources/originals/SIDE一程_城市同行服务报价图_测试版.png",
+    "bytes": 141016,
+    "sha256": "a88f5b9c3f00176bfb088d11e74bd41b2b9e4e0851618594a3b88a99db322399"
+  }
+]
