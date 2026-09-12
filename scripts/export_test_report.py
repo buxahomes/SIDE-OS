@@ -7,6 +7,8 @@ import subprocess
 import sys
 import tempfile
 
+import side_radar as radar
+
 from side_radar import ROOT, TZ, ENDPOINTS, collect, analyze, score, datetime, post_json, normalize, clean_text, clean_url, timedelta
 
 
@@ -51,7 +53,21 @@ def main():
     report = collect(cfg, now, transport=audited_transport)
     report["query_audit"] = query_audit
     score(report)
-    analyze(report, cfg)
+    # Evidence choices are exact contiguous source substrings, never generated facts.
+    for item in report["items"]:
+        item["evidence_options"] = list(dict.fromkeys(text.splitlines()[0][:45] for text in (item["title"], item["excerpt"]) if text.strip() and text.splitlines()[0].strip()))
+    radar.PROMPT += "\n每条记录附有evidence_options。evidence必须逐字复制其中一个完整选项，保留标点、空格及表情；不得改写、拼接或补充。人物身份和服务能力未经核验时只能描述为标题自述。"
+    attempts = []
+    for attempt in range(1, 3):
+        analyze(report, cfg)
+        attempts.append({"attempt": attempt, "status": report["analysis_status"],
+                         "error": report.get("analysis_error"), "usage": dict(report.get("analysis_usage", {}))})
+        if report["analysis_status"] == "ok":
+            report.pop("analysis_error", None)
+            break
+        if report.get("analysis_error") not in ("llm_unsupported_evidence", "llm_invalid_text"):
+            break
+    report["analysis_attempts"] = attempts
     report["export_note"] = "按用户指定关键词北京地陪、北京男大进行的新测试；男大作为关联词，不等同于地陪服务。"
     report["config"] = cfg
     report["run_url"] = "https://github.com/buxahomes/SIDE-OS/actions/runs/" + os.environ.get("GITHUB_RUN_ID", "")
