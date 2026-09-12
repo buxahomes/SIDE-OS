@@ -70,6 +70,25 @@ python3 scripts/side_radar.py --live --collect-only
 
 ## Linux服务器部署
 
+### GitHub Actions 接入测试（可先执行）
+
+仓库 Settings → Secrets and variables → Actions 中添加 `REDFOX_API_KEY` 后，
+`.github/workflows/redfox-check.yml` 可验证凭证与接口覆盖。
+首次在 `feat/dipei-radar` 分支上传此工作流或修改专用检查脚本会触发测试；
+其他文件修改不触发，PR事件和定时事件也不会触发。
+合入默认分支后可以在 Actions 页面手动选择 `RedFox connection check` → Run workflow。
+
+每次最多2次数据调用：两个平台各查一次“地陪”，每页最多5条，窗口为截至昨天的7个完整自然日。
+不调用LLM、不上传原帖、日报或其他Artifacts；公开日志和任务摘要只包含请求状态及数量。
+密钥只注入调用步骤的环境变量，不输出到日志，不复制回聊天或仓库。
+`connection_ok`只表示两个接口接受查询，仍需看有效样本数量；`missing_secret`表示运行步骤没有拿到凭证；
+`failed`需根据HTTP状态或结构错误继续排查。实际结果以Actions运行记录为准。
+
+此工作流用于验证接入，尚未实现GitHub上的每日完整日报和私有持久存储。
+此前的服务器定时模板仍是独立部署选项；GitHub Secrets不会自动传给服务器。
+
+### 服务器完整日报
+
 要求：Python3.11+、systemd、可联网访问所选服务。需要一台持续运行的服务器；这里提供模板，尚未创建或购买服务器。
 
 1. 将本分支的仓库代码部署到 `/opt/side-radar`。代码目录只读，运行数据独立存放。
