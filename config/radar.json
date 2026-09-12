@@ -1,0 +1,11 @@
+{
+  "keywords": ["地陪", "男地陪", "北京地陪", "城市陪游", "北京陪拍", "胡同漫步"],
+  "core_terms": ["地陪", "陪游", "城市同行"],
+  "related_terms": ["陪拍", "胡同漫步", "citywalk", "旅行搭子"],
+  "focus_cities": ["北京"],
+  "lookback_days": 7,
+  "page_size": 30,
+  "pages_per_keyword": 1,
+  "max_requests": 12,
+  "analysis_per_platform": 10
+}
