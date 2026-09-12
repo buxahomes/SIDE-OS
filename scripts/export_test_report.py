@@ -18,8 +18,9 @@ def main():
     now = datetime.now(TZ)
     start, end = now.date().replace(month=1, day=1), now.date()
     cfg = json.loads((ROOT / 'config/radar.json').read_text(encoding='utf-8'))
-    cfg.update(keywords=['北京男地陪', '北京男大'], page_size=50, pages_per_keyword=5, max_requests=20,
-               target_per_platform=10, start_date=str(start), end_date=str(end))
+    cfg.update(keywords=['北京男地陪', '北京男大'], page_size=50, pages_per_keyword=15, max_requests=11,
+               target_per_platform=10, start_date=str(start), end_date=str(end),
+               continuation_pages={'douyin:北京男地陪': [6, 15], 'xiaohongshu:北京男大': [2, 2]})
     cfg.pop('lookback_days', None)
     cfg['related_terms'] = list(dict.fromkeys(cfg['related_terms'] + ['男大', '北京']))
     report = {'generated_at': now.isoformat(), 'period': [str(start), str(end)], 'config': cfg,
@@ -28,13 +29,18 @@ def main():
               'analysis': [], 'analysis_status': 'not_requested_for_search_test',
               'thresholds': {'douyin': {'metric': 'likes', 'operator': '>', 'value': 10000},
                              'xiaohongshu': {'metric': 'likes+comments+saves+shares', 'operator': '>=', 'value': 1000}},
+              'continuation_of_run': '34697587823',
               'selection_note': 'items为数值门槛通过的候选，最终由报告审阅排除综艺、系统广告、非北京或无法确认北京关联的内容，再每平台取最多10条。',
               'run_url': 'https://github.com/buxahomes/SIDE-OS/actions/runs/' + os.environ.get('GITHUB_RUN_ID', '')}
     unique = {}
     for platform, (url, header, list_key, source) in ENDPOINTS.items():
         for keyword in cfg['keywords']:
+            continuation = {('douyin', '北京男地陪'): (6, 15), ('xiaohongshu', '北京男大'): (2, 2)}
+            if (platform, keyword) not in continuation:
+                continue
+            first_page, last_page = continuation[(platform, keyword)]
             seen_pages = set()
-            for page in range(1, cfg['pages_per_keyword'] + 1):
+            for page in range(first_page, last_page + 1):
                 q = {'platform': platform, 'keyword': keyword, 'page': page, 'requested_page_size': 50}
                 report['request_count'] += 1
                 try:
@@ -97,8 +103,8 @@ def main():
                     elif not rows: q['stop_reason'] = 'empty_page'
                     elif data.get('has_more') is False or data.get('hasMore') is False: q['stop_reason'] = 'provider_no_more'
                     elif type(data.get('total')) is int and data['total'] <= page * 50: q['stop_reason'] = 'provider_total_reached'
-                    elif len(rows) < 50 and data.get('has_more') is not True and data.get('hasMore') is not True: q['stop_reason'] = 'short_page'
-                    elif page == cfg['pages_per_keyword']: q['stop_reason'] = 'page_budget_reached'
+                    elif len(rows) < 50 and data.get('has_more') is not True and data.get('hasMore') is not True and not (type(data.get('total')) is int and data['total'] > page * 50): q['stop_reason'] = 'short_page'
+                    elif page == last_page: q['stop_reason'] = 'page_budget_reached'
                     seen_pages.add(signature)
                 except RadarError as exc:
                     q.update(status='error', error=str(exc), stop_reason='request_error')
