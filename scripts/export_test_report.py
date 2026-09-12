@@ -18,12 +18,13 @@ def main():
     now = datetime.now(TZ)
     start, end = datetime.min.date(), datetime.max.date()
     cfg = json.loads((ROOT / 'config/radar.json').read_text(encoding='utf-8'))
-    cfg.update(keywords=['地陪', '男大'], page_size=50, pages_per_keyword=5, max_requests=20,
-               target_per_platform=10, start_date='', end_date='')
+    cfg.update(keywords=['地陪', '男大'], page_size=50, pages_per_keyword=15, max_requests=20,
+               target_per_platform=10, start_date='', end_date='', continuation_pages={'douyin:地陪':[6,15], 'douyin:男大':[6,15]})
     cfg.pop('lookback_days', None)
     cfg['related_terms'] = list(dict.fromkeys(cfg['related_terms'] + ['男大', '北京']))
     report = {'generated_at': now.isoformat(), 'period': [None, None], 'config': cfg,
               'coverage': '不向红狐传入日期限制；实际可检索历史仍取决于接口收录与默认行为，不代表全历史全量。',
+              'continuation_of_run': '34698189610',
               'queries': [], 'query_audit': [], 'items': [], 'errors': [], 'request_count': 0,
               'analysis': [], 'analysis_status': 'not_requested_for_search_test',
               'thresholds': {'douyin': {'metric': 'likes', 'operator': '>', 'value': 5000},
@@ -32,8 +33,10 @@ def main():
               'run_url': 'https://github.com/buxahomes/SIDE-OS/actions/runs/' + os.environ.get('GITHUB_RUN_ID', '')}
     unique = {}
     for platform, (url, header, list_key, source) in ENDPOINTS.items():
+        if platform != 'douyin':
+            continue
         for keyword in cfg['keywords']:
-            first_page, last_page = 1, cfg['pages_per_keyword']
+            first_page, last_page = 6, 15
             seen_pages = set()
             for page in range(first_page, last_page + 1):
                 q = {'platform': platform, 'keyword': keyword, 'page': page, 'requested_page_size': 50}
