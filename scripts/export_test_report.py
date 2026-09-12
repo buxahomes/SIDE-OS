@@ -4,7 +4,7 @@ import json, os, subprocess, tempfile, time
 from pathlib import Path
 from datetime import timedelta
 from side_radar import ROOT, TZ, datetime, ENDPOINTS, post_json, RadarError
-KEYWORDS = ['北京地陪','北京男地陪','男友视角','约会视角','男友感','清爽男大','第一视角约会','地陪vlog','陪你逛']
+KEYWORDS = ['女友视角','沉浸式男友','男生vlog','约会男友','北京约会']
 def main():
     key=os.environ.get('REDFOX_API_KEY','').strip()
     if not key:
@@ -30,6 +30,19 @@ def main():
             report['queries'].append(q)
             if q.get('code')==3201:break
             time.sleep(.3)
+    report['account_queries']=[]
+    accounts=['0zzzzyx1227','Cy_1866','xh20001209','31439131211','47856230192','pclrAyouyou']
+    tasks=[('works',a,'https://redfox.hk/story/api/dy/data/listWorkByAccount',{'uniqueName':a,'pageNum':1,'pageSize':50,'source':'抖音作品爬取'}) for a in accounts]
+    tasks.append(('diagnosis','成帅real/蛋黄酥油','https://redfox.hk/story/api/dyUser/queryData',{'accountNames':['成帅real','蛋黄酥油'],'source':'抖音账号诊断-GitHub'}))
+    for kind,a,url,payload in tasks:
+        q={'kind':kind,'account':a,'endpoint':url,'observed_at':datetime.now(TZ).isoformat()}
+        try:
+            result=post_json(url,{'X-API-KEY':key},payload)
+            q['code']=result.get('code');q['data']=result.get('data')
+        except RadarError as exc:q['error']=str(exc)
+        report['account_queries'].append(q)
+        if q.get('code')==3201:break
+        time.sleep(.3)
     out=Path(os.environ.get('RUNNER_TEMP',tempfile.gettempdir()))/'side-report.cms'
     with tempfile.TemporaryDirectory() as folder:
         plain=Path(folder)/'report.json';plain.write_text(json.dumps(report,ensure_ascii=False));plain.chmod(0o600)
