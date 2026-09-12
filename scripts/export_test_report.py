@@ -4,7 +4,7 @@ import json, os, subprocess, tempfile, time
 from pathlib import Path
 from datetime import timedelta
 from side_radar import ROOT, TZ, datetime, ENDPOINTS, post_json, RadarError
-KEYWORDS = ['女友视角','沉浸式男友','男生vlog','约会男友','北京约会']
+KEYWORDS = ['李歪歪']
 def main():
     key=os.environ.get('REDFOX_API_KEY','').strip()
     if not key:
@@ -31,9 +31,9 @@ def main():
             if q.get('code')==3201:break
             time.sleep(.3)
     report['account_queries']=[]
-    accounts=['0zzzzyx1227','Cy_1866','xh20001209','31439131211','47856230192','pclrAyouyou']
+    accounts=['11107580','15867713']
     tasks=[('works',a,'https://redfox.hk/story/api/dy/data/listWorkByAccount',{'uniqueName':a,'pageNum':1,'pageSize':50,'source':'抖音作品爬取'}) for a in accounts]
-    tasks.append(('diagnosis','成帅real/蛋黄酥油','https://redfox.hk/story/api/dyUser/queryData',{'accountNames':['成帅real','蛋黄酥油'],'source':'抖音账号诊断-GitHub'}))
+    tasks.append(('xhs_diagnosis','公开主页已确认的五个小红书号','https://redfox.hk/story/api/xhsUser/query',{'userIds':['1801906328','883535547','531828211','4265138588','185327070'],'source':'小红书账号诊断-Github'}))
     for kind,a,url,payload in tasks:
         q={'kind':kind,'account':a,'endpoint':url,'observed_at':datetime.now(TZ).isoformat()}
         try:
