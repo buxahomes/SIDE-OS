@@ -1,0 +1,66 @@
+{
+  "note_id": "6aaba891000000002601d477",
+  "author": "阿韵在北京Side",
+  "title": "一个人不敢去？阿韵已就位，随时出发吧",
+  "captured_at": "2026-09-18T14:33:45.720Z",
+  "published_display": "昨天 18:43 北京",
+  "likes": 41,
+  "favorites": 3,
+  "comments": 16,
+  "image_count": 7,
+  "image_capture_type": "full_page_screenshot",
+  "original_image_downloaded": false,
+  "missing": [
+    "原图文件",
+    "绝对发布时间",
+    "浏览量",
+    "私信与成交数据"
+  ],
+  "source_note_id": "6aaba891000000002601d477",
+  "source_url": "https://www.xiaohongshu.com/explore/6aaba891000000002601d477",
+  "status": "text_complete_images_screenshots_only",
+  "images": [
+    {
+      "sequence": 1,
+      "file": "page-01.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "173ef25dc83fb4bc109c24dfc3f5130535ea0f78d0b211f490449b5e7d6464e6"
+    },
+    {
+      "sequence": 2,
+      "file": "page-02.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "d26369ba362576d4afa8ed599d3317756872e927c4084f7354ef519acc45eb5c"
+    },
+    {
+      "sequence": 3,
+      "file": "page-03.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "3b22c05a2881a44425ada0608ef0e3ffacfc82defda6d78494f0e2a2bad06180"
+    },
+    {
+      "sequence": 4,
+      "file": "page-04.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "f4e32a993170a05c962e1214d8202bde5790329029b6cc94630b56e3e7f98443"
+    },
+    {
+      "sequence": 5,
+      "file": "page-05.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "3c38152a0974367a400be59b09c73c4509b523de154a3112c3eec85ca76a0751"
+    },
+    {
+      "sequence": 6,
+      "file": "page-06.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "b8e47dbd65a5493f963e1c7b828e1c76016838de579f7f91f51b6e3641554719"
+    },
+    {
+      "sequence": 7,
+      "file": "page-07.jpg",
+      "type": "webpage_screenshot",
+      "sha256": "1f7d8e0abd820896acf0ef0a2fa390777d3e7f98e7760e82b2654f525436871a"
+    }
+  ]
+}

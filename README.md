@@ -15,6 +15,7 @@
 | 查看人物资料 | [Side档案](docs/04-people.md) |
 | 生成和修改照片 | [照片系统](docs/05-photos.md) · [去AI感规范公开版](docs/photo-naturalism-public.md) |
 | 找素材和历史文件 | [本次公开资料索引](assets/README.md) |
+| 查看已录入小红书笔记 | [笔记归档目录](research/owned-notes/xiaohongshu/README.md) |
 | 读取小红书、抖音 | [读取说明](docs/06-social-reading.md) |
 | 查看仍未确定的规则 | [待定事项](docs/07-open-decisions.md) |
 | 核对哪些内容已迁入 | [迁移范围](docs/08-migration.md) · [来源清单](sources/manifest.json) |
