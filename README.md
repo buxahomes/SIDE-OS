@@ -17,6 +17,7 @@
 | 找素材和历史文件 | [本次公开资料索引](assets/README.md) |
 | 查看已录入小红书笔记 | [笔记归档目录](research/owned-notes/xiaohongshu/README.md) |
 | 读取小红书、抖音 | [读取说明](docs/06-social-reading.md) |
+| 每日观察地陪热帖 | [地陪内容观察日报：配置与部署草案](docs/11-content-radar.md) |
 | 查看仍未确定的规则 | [待定事项](docs/07-open-decisions.md) |
 | 核对哪些内容已迁入 | [迁移范围](docs/08-migration.md) · [来源清单](sources/manifest.json) |
 | 上传独立GitHub仓库 | [部署说明](docs/09-github.md) |
@@ -34,7 +35,9 @@ python3 scripts/side_kb.py ingest --platform xiaohongshu --file /本地/截图.p
 python3 -m unittest discover -s tests -v
 ```
 
-`fetch` 尝试读取公开网页中的正文或元数据，不能保证平台允许访问。截图、音视频导入会登记文件和校验值，**不等于已完成OCR、语音转写或视频理解**；正文、人工识别结果和字幕可单独入库。官方抖音账号API尚未接通。没有定时抓取、自动发布或自动推送。
+`fetch` 尝试读取公开网页中的正文或元数据，不能保证平台允许访问。截图、音视频导入会登记文件和校验值，**不等于已完成OCR、语音转写或视频理解**；正文、人工识别结果和字幕可单独入库。官方抖音账号API尚未接通。
+
+新增的 `scripts/side_radar.py` 提供红狐数据采集、规则初筛、模型分析和HTML日报；运行不带参数时只做离线预检。每天北京时间00:30的服务器定时模板见 `deploy/`。**红狐密钥已通过 GitHub Actions 真实查询测试；模型已通过小样本分析联调，每日定时运行未启用**。研究输出默认保存在被git忽略的 `research/local/radar/`，不自动公开发布或推送。详见[部署说明](docs/11-content-radar.md)。
 
 ## 使用顺序
 

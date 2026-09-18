@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Side radar at 00:30 China time
+
+[Timer]
+OnCalendar=*-*-* 00:30:00 Asia/Shanghai
+Persistent=true
+AccuracySec=1min
+Unit=side-radar.service
+
+[Install]
+WantedBy=timers.target

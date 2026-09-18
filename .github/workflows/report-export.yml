@@ -1,0 +1,38 @@
+name: Side test report export
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/dipei-radar]
+    paths:
+      - .github/workflows/report-export.yml
+      - scripts/export_test_report.py
+      - deploy/report-recipient.pem
+permissions:
+  contents: read
+concurrency:
+  group: side-test-report-export
+  cancel-in-progress: false
+jobs:
+  export:
+    if: github.repository == 'buxahomes/SIDE-OS'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Collect and analyze the test sample, then encrypt the report
+        env:
+          REDFOX_API_KEY: ${{ secrets.REDFOX_API_KEY }}
+          RADAR_LLM_URL: ${{ secrets.RADAR_LLM_URL }}
+          RADAR_LLM_API_KEY: ${{ secrets.RADAR_LLM_API_KEY }}
+          RADAR_LLM_MODEL: ${{ secrets.RADAR_LLM_MODEL }}
+        run: python3 scripts/export_test_report.py
+      - name: Preserve encrypted report only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: side-test-report-encrypted
+          path: ${{ runner.temp }}/side-report.cms
+          if-no-files-found: error
+          retention-days: 3

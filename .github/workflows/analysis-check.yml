@@ -1,0 +1,36 @@
+name: Side analysis connection check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/dipei-radar]
+    paths:
+      - .github/workflows/analysis-check.yml
+      - scripts/check_analysis.py
+
+permissions:
+  contents: read
+
+concurrency:
+  group: side-analysis-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: github.repository == 'buxahomes/SIDE-OS'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Check out reviewed branch code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Offline tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Check real data and model (two data requests, one model request)
+        env:
+          REDFOX_API_KEY: ${{ secrets.REDFOX_API_KEY }}
+          RADAR_LLM_URL: ${{ secrets.RADAR_LLM_URL }}
+          RADAR_LLM_API_KEY: ${{ secrets.RADAR_LLM_API_KEY }}
+          RADAR_LLM_MODEL: ${{ secrets.RADAR_LLM_MODEL }}
+        run: python3 scripts/check_analysis.py
