@@ -1,0 +1,52 @@
+{
+  "note_id": "6ab00fb50000000028037735",
+  "account": "Lip",
+  "captured_at": "2026-09-21T13:14:46.526Z",
+  "method": "control-browser screenshot and visible page observation",
+  "status": "partial",
+  "metrics": {
+    "likes": {
+      "value": 1,
+      "display": "1",
+      "status": "observed"
+    },
+    "favorites": {
+      "value": null,
+      "display": "星形图标旁无数字",
+      "status": "not_displayed"
+    },
+    "comments": {
+      "value": null,
+      "display": "这是一片荒地 点击评论",
+      "visible_comment_count": 0,
+      "status": "empty_state_visible_total_not_displayed"
+    }
+  },
+  "images": {
+    "captured_photo_count": 1,
+    "total_photo_count": null,
+    "original_image_saved": false
+  },
+  "attachments": [
+    {
+      "file": "page.jpg",
+      "kind": "page_screenshot",
+      "bytes": 113008,
+      "sha256": "e73ed3a4eb7b6b96fc94c134563c1f0107043cb6a25ff381dd2e73075c5d6aad"
+    },
+    {
+      "file": "photo-01.jpg",
+      "kind": "photo_area_screenshot",
+      "bytes": 61316,
+      "sha256": "73101cf5a3d0b83c71fc2cd2332596541be5f527918a945e1385dcbc8dee8844"
+    }
+  ],
+  "missing": [
+    "原始图片文件",
+    "完整图片组及总数",
+    "收藏数",
+    "明确评论总数",
+    "精确发布时间",
+    "咨询成交数据"
+  ]
+}
